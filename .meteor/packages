@@ -4,6 +4,7 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-autopublish
-insecure
 preserve-inputs
+meteor-bootstrap-3
+iron-router
+iron-router-progress
