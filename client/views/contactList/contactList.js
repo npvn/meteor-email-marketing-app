@@ -59,6 +59,12 @@ Template.contactList.events({
         };
         Emails.insert(newMessage);
         $('#sendMessage').modal('hide');
+    },
+
+    // Filter apply handler
+    'click #applyFilterButton': function() {
+        var tag = $('#applyFilter').val().trim();
+        Router.go('contactList', {tag: tag});
     }
 
 

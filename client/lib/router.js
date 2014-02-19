@@ -29,9 +29,9 @@ Router.map(function() {
     });
 
     this.route('contactList', {
-        path: '/contact-list',
+        path: '/contact-list/tag=:tag?',
         waitOn: function() {
-            return Meteor.subscribe('contactList', Meteor.userId());
+            return Meteor.subscribe('contactList', Meteor.userId(), this.params.tag);
         },
         data: function() {
             return Contacts.find();

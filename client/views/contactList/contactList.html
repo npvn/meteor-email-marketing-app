@@ -4,8 +4,9 @@
 
         {{#if userEmailIsVerified}}
 
-
             <button id="showAddNewContactModal" type="button" class="btn btn-primary">Add New Contact</button>
+
+            <input id="applyFilter" type="text" placeholder="Filter by tag"><button id="applyFilterButton">Apply</button>
 
             <ul class="list-group">
                 {{#each contactList}}
