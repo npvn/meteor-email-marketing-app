@@ -5,8 +5,10 @@ Template.login.rendered = function() {
 
 };
 
+
 Template.login.events({
 
+    // Login handler
     'submit': function(e) {
         e.preventDefault();
         var email = $('#emailInput').val();
@@ -17,7 +19,7 @@ Template.login.events({
             if ( error ) {
                 $('#alert').text(error.reason);
                 $('#alert').slideDown();
-            // Redirect to contact list page on success logging
+            // Redirect to contact list page on success
             } else {
                 Router.go('home');
             }

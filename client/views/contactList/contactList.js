@@ -1,6 +1,6 @@
 Template.contactList.helpers({
 
-    // Return a sorted contact list of this account
+    // Return a sorted contact list for this account
     contactList: function() {
         return Contacts.find( {}, {sort:{modified:-1}} );
     }
@@ -47,7 +47,6 @@ Template.contactList.events({
             Contacts.insert(newContact);
             $('#addNewContact').modal('hide');
         }
-
     },
 
     // Show sending message modal
@@ -76,11 +75,10 @@ Template.contactList.events({
         $('#sendMessage').modal('hide');
     },
 
-    // Filter apply handler
+    // Tag filtering apply handler
     'click #applyFilterButton': function() {
         var tag = $('#applyFilter').val().trim();
         Router.go('contactList', {tag: tag});
     }
-
 
 });

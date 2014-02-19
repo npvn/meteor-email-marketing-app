@@ -5,14 +5,15 @@ Template.register.rendered = function() {
 
 };
 
+
 Template.register.events({
 
+    // New user registering handler
     'submit': function(e) {
         e.preventDefault();
         var email = $('#emailInput').val();
         var password = $('#passwordInput').val();
         var passwordConfirm = $('#passwordConfirm').val();
-
         // Check password length
         if ( password.length < 6 )
             $('#alert').text('Password should be at least 6 character long.').slideDown();
@@ -33,8 +34,6 @@ Template.register.events({
                 }
             });
         }
-
-
     },
 
     // Switch to login view

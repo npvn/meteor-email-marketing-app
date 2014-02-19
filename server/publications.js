@@ -1,3 +1,4 @@
+
 Meteor.publish('contactList', function(userId, tag) {
    // Filter publication with user's id
    if ( ! tag ) return Contacts.find( {contactOwnerId: userId} );
