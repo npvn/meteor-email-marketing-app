@@ -1,5 +1,5 @@
 Template.login.rendered = function() {
-    console.log('login render called');
+
     // On render, hide the alert bar
     $('#alert').hide();
 

@@ -1,0 +1,17 @@
+<template name="contactList">
+
+    {{#unless loggingIn}} {{! Help avoid initial flashing when Meteor hasn't logged user in yet }}
+
+        {{#if userEmailIsVerified}}
+
+            <p>Great, you have verified your email !!!</p>
+
+        {{else}}
+
+            <p>Sorry, you need to login with a verified email before continue.</p>
+
+        {{/if}}
+
+    {{/unless}}
+
+</template>
