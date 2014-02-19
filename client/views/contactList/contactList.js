@@ -1,10 +1,5 @@
 Template.contactList.helpers({
 
-    // Check if user has logged in with a verified email
-    userEmailIsVerified: function() {
-        return Meteor.user() && Meteor.user().emails[0].verified;
-    },
-
     // Return a sorted contact list of this account
     contactList: function() {
         return Contacts.find( {}, {sort:{modified:-1}} );
@@ -17,6 +12,7 @@ Template.contactList.events({
 
     // Show adding contact modal
     'click #showAddNewContactModal': function() {
+        $('#addNewContactError').hide();
         $('#addNewContact input').val('');
         $('#addNewContact').modal();
     },
@@ -24,15 +20,34 @@ Template.contactList.events({
     // New contact submit
     'submit #addNewContactForm': function(e) {
         e.preventDefault();
+
         var newContact = {
-            name: $('#nameInput').val(),
-            email: $('#emailInput').val(),
-            tags: $('#tagInput').val().split(','),
+            name: $('#nameInput').val().trim(),
+            email: $('#emailInput').val().trim(),
+            tags: (function() {
+                // Return an array of trimmed tags
+                var tagArray = $('#tagInput').val().split(',');
+                return _.map(tagArray, function(tag) { return tag.trim(); });
+            })(),
             contactOwnerId: Meteor.userId(),
             modified: (new Date()).valueOf()
         };
-        Contacts.insert(newContact);
-        $('#addNewContact').modal('hide');
+
+        // Check if this email already exists in user's contact list
+        var emailIsUnique = true;
+        var cursor = Contacts.find();
+        cursor.rewind();
+        cursor.forEach(function(contact) {
+            if ( contact.email === newContact.email ) emailIsUnique = false;
+        });
+
+        if ( ! emailIsUnique ) {
+            $('#addNewContactError').text('This email already exists in your contact list.').slideDown();
+        } else {
+            Contacts.insert(newContact);
+            $('#addNewContact').modal('hide');
+        }
+
     },
 
     // Show sending message modal
@@ -52,10 +67,10 @@ Template.contactList.events({
         e.preventDefault();
         var newMessage = {
             receiver: $('#receiverAddress').text(),
-            subject: $('#subjectInput').val(),
+            subject: $('#subjectInput').val().trim(),
             body: $('#bodyInput').val(),
             messageOwnerId: Meteor.userId(),
-            modified: (new Date()).valueOf()
+            time: (new Date()).valueOf()
         };
         Emails.insert(newMessage);
         $('#sendMessage').modal('hide');
