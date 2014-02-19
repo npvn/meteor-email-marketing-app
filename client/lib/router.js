@@ -36,16 +36,9 @@ Router.map(function() {
     this.route('emailVerification', {
         path: '/verify-email/:token',
         before: function() {
-            console.log('verification is called with token: ' + this.params.token);
             Accounts.verifyEmail(this.params.token, function(error) {
-                if ( ! error ) {
-                    console.log('successed');
-                    Router.go('contactList');
-                }
-                else {
-                    console.log(error);
-                    Router.go('emailVerificationError');
-                }
+                if ( ! error ) Router.go('contactList');
+                else Router.go('emailVerificationError');
             });
         }
     });
