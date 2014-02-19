@@ -17,8 +17,9 @@ Template.login.events({
             if ( error ) {
                 $('#alert').text(error.reason);
                 $('#alert').slideDown();
+            // Redirect to contact list page on success logging
             } else {
-
+                Router.go('home');
             }
         });
     },

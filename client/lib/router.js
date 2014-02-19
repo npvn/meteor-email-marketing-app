@@ -29,7 +29,13 @@ Router.map(function() {
     });
 
     this.route('contactList', {
-        path: '/contact-list'
+        path: '/contact-list',
+        waitOn: function() {
+            return Meteor.subscribe('contactList', Meteor.userId());
+        },
+        data: function() {
+            return Contacts.find();
+        }
     });
 
     // Verify user's email using token in param
