@@ -29,7 +29,7 @@ Template.contactList.events({
                 var tagArray = $('#tagInput').val().split(',');
                 return _.map(tagArray, function(tag) { return tag.trim(); });
             })(),
-            contactOwnerId: Meteor.userId(),
+            ownerId: Meteor.userId(),
             modified: (new Date()).valueOf()
         };
 
@@ -68,7 +68,7 @@ Template.contactList.events({
             receiver: $('#receiverAddress').text(),
             subject: $('#subjectInput').val().trim(),
             body: $('#bodyInput').val(),
-            messageOwnerId: Meteor.userId(),
+            ownerId: Meteor.userId(),
             time: (new Date()).valueOf()
         };
         Emails.insert(newMessage);

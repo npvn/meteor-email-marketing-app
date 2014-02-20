@@ -1,25 +1,33 @@
 Emails = new Meteor.Collection('emails');
 
 
-Emails.allow({
+// Allow/deny rules for this collection
+// Note: No allow rule is set for update and remove since we do not allow clients to perform these operations in our app
+
+if ( Meteor.isServer ) {
 
     // Only logged in user can insert new doc
-    insert: function(userId) {
-        return userId;
-    }
-
-});
+    Emails.allow({ insert: userLoggedIn });
 
 
-Emails.deny({
+    // Deny if doc contains illegal properties
+    Emails.deny({
+        insert: function(userId, doc) {
+            var docIsNotValid = false;
+            var allowedFields = ['_id', 'receiver', 'subject', 'body', 'ownerId', 'time'];
+            _.each(doc, function(value, key) {
+                if ( ! _.contains(allowedFields, key) ) docIsNotValid = true;
+            });
+            return docIsNotValid;
+        }
+    });
 
-    // Deny the operation if doc contains illegal properties
-    insert: function(userId, doc) {
-        var docIsNotValid = false;
-        var allowedFields = ['_id', 'receiver', 'subject', 'body', 'messageOwnerId', 'time'];
-        for (var prop in doc)
-            if ( ! _.contains(allowedFields, prop) ) docIsNotValid = true;
 
-        return docIsNotValid;
-    }
-});
+    // Deny if any property is invalid (e.g. email is empty)
+    Emails.deny({ insert: docContainsInvalidProp });
+
+
+    // Deny if contactOwnerId is not the same as id of the currently logged in user
+    Emails.deny({ insert: ownerIdIsNotValid });
+
+}
