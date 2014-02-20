@@ -27,7 +27,7 @@ if ( Meteor.isServer ) {
     Emails.deny({ insert: docContainsInvalidProp });
 
 
-    // Deny if contactOwnerId is not the same as id of the currently logged in user
+    // Deny if ownerId is not the same as id of the currently logged in user
     Emails.deny({ insert: ownerIdIsNotValid });
 
 }

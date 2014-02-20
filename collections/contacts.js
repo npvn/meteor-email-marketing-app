@@ -27,7 +27,7 @@ if ( Meteor.isServer) {
     Contacts.deny({ insert: docContainsInvalidProp });
 
 
-    // Deny if contactOwnerId is not the same as id of the currently logged in user
+    // Deny if ownerId is not the same as id of the currently logged in user
     Contacts.deny({ insert: ownerIdIsNotValid });
 
 
@@ -36,7 +36,7 @@ if ( Meteor.isServer) {
         insert: function(userId, doc) {
             var email = doc.email;
             var emailAlreadyExists = false;
-            var cursor = Contacts.find({contactOwnerId: userId});
+            var cursor = Contacts.find({ownerId: userId});
             cursor.rewind();
             cursor.forEach(function(contact) {
                 if ( email === contact.email ) emailAlreadyExists = true;
