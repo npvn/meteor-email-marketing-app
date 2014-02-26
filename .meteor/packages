@@ -5,9 +5,9 @@
 
 standard-app-packages
 preserve-inputs
-meteor-bootstrap-3
-iron-router
-iron-router-progress
 accounts-base
 accounts-password
 email
+iron-router
+iron-router-progress
+bootstrap-3
